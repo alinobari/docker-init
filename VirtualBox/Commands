@@ -2,3 +2,15 @@
 
 $ sudo apt install virtualbox
 $ sudo apt install virtualbox-ext-pack
+
+#Guest addition installation
+$ sudo mount /dev/cdrom /media/cdrom
+$ cd /media/cdrom
+$ sudo apt-get update
+$ sudo apt-get upgrade
+$ sudo apt-get install build-essential module-assistant
+$ sudo m-a prepare
+$ sudo sh VBoxLinuxAdditions.run
+
+#To share folders
+$ sudo mount -t vboxsf Docker /mnt
