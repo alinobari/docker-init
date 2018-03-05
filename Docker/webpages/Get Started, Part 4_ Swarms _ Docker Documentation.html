@@ -1,0 +1,969 @@
+<!DOCTYPE html>
+<!-- saved from url=(0042)https://docs.docker.com/get-started/part4/ -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<!--<base href="/get-started/">--><base href=".">
+	
+	<style type="text/css">
+		@charset "UTF-8";
+		[ng\:cloak],
+		[ng-cloak],
+		[data-ng-cloak],
+		[x-ng-cloak],
+		.ng-cloak,
+		.x-ng-cloak,
+		.ng-hide:not(.ng-hide-animate) {
+			display: none !important;
+		}
+
+		ng\:form {
+			display: block;
+		}
+	</style>
+	
+	<script type="text/javascript" async="" src="./Get Started, Part 4_ Swarms _ Docker Documentation_files/analytics.js"></script><script type="text/javascript" async="" src="./Get Started, Part 4_ Swarms _ Docker Documentation_files/linkid.js"></script><script type="text/javascript" async="" src="./Get Started, Part 4_ Swarms _ Docker Documentation_files/analytics.js"></script><script type="text/javascript" async="" src="./Get Started, Part 4_ Swarms _ Docker Documentation_files/gtm.js"></script><script id="pd-rating-js" src="./Get Started, Part 4_ Swarms _ Docker Documentation_files/rating.js"></script><script type="text/javascript" async="" src="./Get Started, Part 4_ Swarms _ Docker Documentation_files/analytics.min.js"></script><script type="text/javascript">
+	  !function(){var analytics=window.analytics=window.analytics||[];if(!analytics.initialize)if(analytics.invoked)window.console&&console.error&&console.error("Segment snippet included twice.");else{analytics.invoked=!0;analytics.methods=["trackSubmit","trackClick","trackLink","trackForm","pageview","identify","reset","group","track","ready","alias","debug","page","once","off","on"];analytics.factory=function(t){return function(){var e=Array.prototype.slice.call(arguments);e.unshift(t);analytics.push(e);return analytics}};for(var t=0;t<analytics.methods.length;t++){var e=analytics.methods[t];analytics[e]=analytics.factory(e)}analytics.load=function(t){var e=document.createElement("script");e.type="text/javascript";e.async=!0;e.src=("https:"===document.location.protocol?"https://":"http://")+"cdn.segment.com/analytics.js/v1/"+t+"/analytics.min.js";var n=document.getElementsByTagName("script")[0];n.parentNode.insertBefore(e,n)};analytics.SNIPPET_VERSION="4.0.0";
+	  analytics.load("IWj9D0UpZHZdZUZX9jl98PcpBFWBnBMy");
+	  analytics.page();
+	  }}();
+	</script>
+	
+	<!-- favicon -->
+	<link rel="icon" type="image/x-icon" href="https://docs.docker.com/favicons/docs@2x.ico" sizes="129x128">
+	<meta name="msapplication-TileImage" content="/favicons/docs@2x.ico">
+	<link rel="apple-touch-icon" type="image/x-icon" href="https://docs.docker.com/favicons/docs@2x.ico" sizes="129x128">
+	<meta property="og:image" content="/favicons/docs@2x.ico">
+	<!-- metadata -->
+	<meta property="og:type" content="website">
+	<meta property="og:updated_time" itemprop="dateUpdated" content="2018-03-03T00:38:47+00:00">
+	<meta property="og:image" itemprop="image primaryImageOfPage" content="/images/docs@2x.png">
+	<meta name="twitter:card" content="summary">
+	<meta name="twitter:domain" content="docs.docker.com">
+	<meta name="twitter:site" content="@docker_docs">
+	<meta name="twitter:url" content="https://twitter.com/docker_docs">
+	<meta name="twitter:title" itemprop="title name" content="Get Started, Part 4: Swarms">
+	<meta name="twitter:description" property="og:description" itemprop="description" content="1: Orientation 2: Containers 3: Services 4: Swarms 5: Stacks 6: Deploy your app Prerequisites Install Docker version 1.13 or higher. Get Docker Compose as described in Part 3 prerequisites....">
+	<meta name="twitter:image:src" content="/images/docs@2x.png">
+	<meta name="twitter:image:alt" content="Docker Documentation">
+	<meta property="article:published_time" itemprop="datePublished" content="2018-03-03T00:38:47+00:00">
+
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="keywords" content="swarm, scale, cluster, machine, vm, manager, worker, deploy, ssh, orchestration">
+	<link rel="stylesheet" href="./Get Started, Part 4_ Swarms _ Docker Documentation_files/font-awesome.min.css">
+	<link rel="stylesheet" href="./Get Started, Part 4_ Swarms _ Docker Documentation_files/bootstrap.min.css">
+	<link id="pygments" rel="stylesheet" href="./Get Started, Part 4_ Swarms _ Docker Documentation_files/perldoc.css">
+	<link id="pagestyle" rel="stylesheet" href="./Get Started, Part 4_ Swarms _ Docker Documentation_files/style.css">
+
+	<!-- Go get "Open Sans" font from Google -->
+	<link href="./Get Started, Part 4_ Swarms _ Docker Documentation_files/css" rel="stylesheet">
+	<!-- SEO stuff -->
+	<title>Get Started, Part 4: Swarms | Docker Documentation</title>
+<meta property="og:title" content="Get Started, Part 4: Swarms">
+<meta property="og:locale" content="en_US">
+<meta name="description" content="Learn how to create clusters of Dockerized machines.">
+<meta property="og:description" content="Learn how to create clusters of Dockerized machines.">
+<link rel="canonical" href="https://docs.docker.com/get-started/part4/">
+<meta property="og:url" content="https://docs.docker.com/get-started/part4/">
+<meta property="og:site_name" content="Docker Documentation">
+<script type="application/ld+json">
+{"@context":"http://schema.org","@type":"WebPage","headline":"Get Started, Part 4: Swarms","description":"Learn how to create clusters of Dockerized machines.","url":"https://docs.docker.com/get-started/part4/"}</script>
+	<!-- END SEO STUFF -->
+	
+	<script language="javascript">
+	// Default to assuming this is an archive and hiding some stuff
+	// See js/archive.js and js/docs.js for logic relating to this
+	var isArchive = true;
+	var dockerVersion = 'v17.12';
+	</script>
+<script charset="utf-8" src="./Get Started, Part 4_ Swarms _ Docker Documentation_files/rate.php"></script><script charset="utf-8" src="./Get Started, Part 4_ Swarms _ Docker Documentation_files/rating-results.php"></script><style type="text/css" id="pd_popup_holder_style_8453675">#pd_popup_holder_8453675 { position:absolute; display:none; width:175px; height:auto; top:0px; left:0px; z-index:10000; border:solid 1px #CCC; background-color:white; padding:0px 15px;font-family:Arial,Sans;box-shadow: -10px 10px 20px rgba(0, 0, 0, .5);-webkit-box-shadow: 0px 0px 6px rgba(0, 0, 0, .25);-moz-box-shadow: 0px 0px 6px rgba(0, 0, 0, .25); }</style></head>
+<body ng-app="Docker" ng-controller="DockerController" class="colums">
+	<header>
+		 <nav class="nav-secondary navbar navbar-fixed-top">
+    <!-- <div class="fan"></div> -->
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a href="https://docs.docker.com/"><img class="logo" src="./Get Started, Part 4_ Swarms _ Docker Documentation_files/docker-docs-logo.svg" alt="Docker Docs" title="Docker Docs"></a>
+        </div>
+        <div class="navbar-collapse" aria-expanded="false" style="height: 1px;">
+            <div class="search-form" id="search-div" style="visibility: visible;">
+    <form class="search-form form-inline ng-pristine ng-valid" id="searchForm" action="https://docs.docker.com/search/" style="visibility: visible;">
+        <input class="search-field form-control ds-input" id="st-search-input" value="" name="q" placeholder="Search the docs" type="search" autocomplete="off" spellcheck="false" dir="auto" style="position: relative; vertical-align: top;">
+        <div id="autocompleteContainer">
+            <div id="autocompleteResults"></div>
+        </div>
+        <!-- <button type="submit" class="search-submit btn btn-default">Search</button> -->
+    </form>
+</div>
+<div class="sidebar-toggle">
+    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+    </button>
+</div>
+<div class="nav-container">
+    <div id="tabs">
+        <ul class="tabs" id="jsTOCHorizontal"><li id="guides" class="active"><a href="https://docs.docker.com/">Guides</a></li>
+<li id="manuals"><a href="https://docs.docker.com/manuals/">Product manuals</a></li>
+<li id="glossary"><a href="https://docs.docker.com/glossary/">Glossary</a></li>
+<li id="reference"><a href="https://docs.docker.com/reference/">Reference</a></li>
+<li id="samples"><a href="https://docs.docker.com/samples/">Samples</a></li>
+</ul>
+    </div>
+    <div class="ctrl-right hidden-xs hidden-sm">
+        <a href="javascript:void(0)" id="menu-toggle"><i class="fa fa-indent" aria-hidden="true"></i></a>
+        <div class="btn-group" style="visibility: visible;">
+  <button type="button" class="btn btn-default dropdown-btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    Docker v17.12 (current)                <span class="caret"></span>
+  </button>
+  <ul class="dropdown-menu">
+    <li><a href="https://docs.docker.com/edge/">Docker edge</a></li><li><a href="https://docs.docker.com/v17.09/">Docker v17.09</a></li><li><a href="https://docs.docker.com/v17.06/">Docker v17.06</a></li><li><a href="https://docs.docker.com/v17.03/">Docker v17.03</a></li><li><a href="https://docs.docker.com/v1.13/">Docker v1.13</a></li><li><a href="https://docs.docker.com/v1.12/">Docker v1.12</a></li><li><a href="https://docs.docker.com/v1.11/">Docker v1.11</a></li><li><a href="https://docs.docker.com/v1.10/">Docker v1.10</a></li><li><a href="https://docs.docker.com/v1.9/">Docker v1.9</a></li><li><a href="https://docs.docker.com/v1.8/">Docker v1.8</a></li><li><a href="https://docs.docker.com/v1.7/">Docker v1.7</a></li><li><a href="https://docs.docker.com/v1.6/">Docker v1.6</a></li><li><a href="https://docs.docker.com/v1.5/">Docker v1.5</a></li><li><a href="https://docs.docker.com/v1.4/">Docker v1.4</a></li>
+  </ul>
+</div>
+
+    </div>
+</div>
+
+        </div>
+    </div>
+</nav>
+	</header>
+
+	<div class="wrapper right-open">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-body">
+					<main class="col-content content">
+						<section class="section">
+							
+								
+							<h1>Get Started, Part 4: Swarms</h1>  <span class="reading-time" title="Estimated reading time">
+  <span class="reading-time-label">Estimated reading time: </span>
+  
+  
+    20 minutes
+  
+</span>
+
+							
+							
+							<ul class="pagination">
+  <li><a href="https://docs.docker.com/get-started/part1">1: Orientation</a></li>
+  <li><a href="https://docs.docker.com/get-started/part2">2: Containers</a></li>
+  <li><a href="https://docs.docker.com/get-started/part3">3: Services</a></li>
+  <li class="active"><a href="https://docs.docker.com/get-started/part4">4: Swarms</a></li>
+  <li><a href="https://docs.docker.com/get-started/part5">5: Stacks</a></li>
+  <li><a href="https://docs.docker.com/get-started/part6">6: Deploy your app</a></li>
+</ul>
+
+<h2 id="prerequisites">Prerequisites</h2>
+
+<ul>
+  <li>
+    <p><a href="https://docs.docker.com/engine/installation/">Install Docker version 1.13 or higher</a>.</p>
+  </li>
+  <li>
+    <p>Get <a href="https://docs.docker.com/compose/overview/">Docker Compose</a> as described in <a href="https://docs.docker.com/get-started/part3/#prerequisites">Part 3 prerequisites</a>.</p>
+  </li>
+  <li>
+    <p>Get <a href="https://docs.docker.com/machine/overview/">Docker Machine</a>, which is pre-installed with
+<a href="https://docs.docker.com/docker-for-mac/">Docker for Mac</a> and <a href="https://docs.docker.com/docker-for-windows/">Docker for
+Windows</a>, but on Linux systems you need to
+<a href="https://docs.docker.com/machine/install-machine/#installing-machine-directly">install it directly</a>. On pre Windows 10 systems <em>without Hyper-V</em>, as well as Windows 10 Home, use
+<a href="https://docs.docker.com/toolbox/overview/">Docker Toolbox</a>.</p>
+  </li>
+  <li>
+    <p>Read the orientation in <a href="https://docs.docker.com/get-started/">Part 1</a>.</p>
+  </li>
+  <li>
+    <p>Learn how to create containers in <a href="https://docs.docker.com/get-started/part2/">Part 2</a>.</p>
+  </li>
+  <li>
+    <p>Make sure you have published the <code class="highlighter-rouge">friendlyhello</code> image you created by
+<a href="https://docs.docker.com/get-started/part2/#share-your-image">pushing it to a registry</a>. We use that
+shared image here.</p>
+  </li>
+  <li>
+    <p>Be sure your image works as a deployed container. Run this command,
+slotting in your info for <code class="highlighter-rouge">username</code>, <code class="highlighter-rouge">repo</code>, and <code class="highlighter-rouge">tag</code>: <code class="highlighter-rouge">docker run -p 80:80
+username/repo:tag</code>, then visit <code class="highlighter-rouge">http://localhost/</code>.</p>
+  </li>
+  <li>
+    <p>Have a copy of your <code class="highlighter-rouge">docker-compose.yml</code> from <a href="https://docs.docker.com/get-started/part3/">Part 3</a> handy.</p>
+  </li>
+</ul>
+
+<h2 id="introduction">Introduction</h2>
+
+<p>In <a href="https://docs.docker.com/get-started/part3/">part 3</a>, you took an app you wrote in <a href="https://docs.docker.com/get-started/part2/">part 2</a>, and
+defined how it should run in production by turning it into a service, scaling it
+up 5x in the process.</p>
+
+<p>Here in part 4, you deploy this application onto a cluster, running it on
+multiple machines. Multi-container, multi-machine applications are made possible
+by joining multiple machines into a “Dockerized” cluster called a <strong>swarm</strong>.</p>
+
+<h2 id="understanding-swarm-clusters">Understanding Swarm clusters</h2>
+
+<p>A swarm is a group of machines that are running Docker and joined into
+a cluster. After that has happened, you continue to run the Docker commands
+you’re used to, but now they are executed on a cluster by a <strong>swarm manager</strong>.
+The machines in a swarm can be physical or virtual. After joining a swarm, they
+are referred to as <strong>nodes</strong>.</p>
+
+<p>Swarm managers can use several strategies to run containers, such as “emptiest
+node” – which fills the least utilized machines with containers. Or “global”,
+which ensures that each machine gets exactly one instance of the specified
+container. You instruct the swarm manager to use these strategies in the Compose
+file, just like the one you have already been using.</p>
+
+<p>Swarm managers are the only machines in a swarm that can execute your commands,
+or authorize other machines to join the swarm as <strong>workers</strong>. Workers are just
+there to provide capacity and do not have the authority to tell any other
+machine what it can and cannot do.</p>
+
+<p>Up until now, you have been using Docker in a single-host mode on your local
+machine. But Docker also can be switched into <strong>swarm mode</strong>, and that’s what
+enables the use of swarms. Enabling swarm mode instantly makes the current
+machine a swarm manager. From then on, Docker runs the commands you execute
+on the swarm you’re managing, rather than just on the current machine.</p>
+
+<h2 id="set-up-your-swarm">Set up your swarm</h2>
+
+<p>A swarm is made up of multiple nodes, which can be either physical or virtual
+machines. The basic concept is simple enough: run <code class="highlighter-rouge">docker swarm init</code> to enable
+swarm mode and make your current machine a swarm manager, then run
+<code class="highlighter-rouge">docker swarm join</code> on other machines to have them join the swarm as workers.
+Choose a tab below to see how this plays out in various contexts. We use VMs
+to quickly create a two-machine cluster and turn it into a swarm.</p>
+
+<h3 id="create-a-cluster">Create a cluster</h3>
+
+<ul class="nav nav-tabs">
+  <li class="active"><a data-toggle="tab" href="https://docs.docker.com/get-started/part4/#local">Local VMs (Mac, Linux, Windows 7 and 8)</a></li>
+  <li><a data-toggle="tab" href="https://docs.docker.com/get-started/part4/#localwin">Local VMs (Windows 10/Hyper-V)</a></li>
+</ul>
+<div class="tab-content">
+  <div id="local" class="tab-pane fade in active">
+    <h4 id="vms-on-your-local-machine-mac-linux-windows-7-and-8">VMs on your local machine (Mac, Linux, Windows 7 and 8)</h4>
+    <p>You need a hypervisor that can create virtual machines (VMs), so <a href="https://www.virtualbox.org/wiki/Downloads">install Oracle VirtualBox</a> for your machine’s OS.</p>
+    <blockquote>
+      <p><strong>Note</strong>: If you are on a Windows system that has Hyper-V installed, such as Windows 10, there is no need to install VirtualBox and you should use Hyper-V instead. View the instructions for Hyper-V systems by clicking the Hyper-V tab above. If you are using <a href="https://docs.docker.com/toolbox/overview/">Docker Toolbox</a>, you should already have VirtualBox installed as part of it, so you are good to go.</p>
+    </blockquote>
+    <p>Now, create a couple of VMs using <code class="highlighter-rouge">docker-machine</code>, using the VirtualBox driver:</p>
+    <div class="language-shell highlighter-rouge">
+      <div class="highlight">
+        <div class="highlight highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker-machine create --driver virtualbox myvm1
+docker-machine create --driver virtualbox myvm2
+</code></pre></div>        </div>
+      </div>
+    </div>
+  </div>
+  <div id="localwin" class="tab-pane fade">
+
+    <h4 id="vms-on-your-local-machine-windows-10">VMs on your local machine (Windows 10)</h4>
+
+    <p>First, quickly create a virtual switch for your virtual machines (VMs) to share, so they can connect to each other.</p>
+
+    <ol>
+      <li>Launch Hyper-V Manager</li>
+      <li>Click <strong>Virtual Switch Manager</strong> in the right-hand menu</li>
+      <li>Click <strong>Create Virtual Switch</strong> of type <strong>External</strong></li>
+      <li>Give it the name <code class="highlighter-rouge">myswitch</code>, and check the box to share your host machine’s active network adapter</li>
+    </ol>
+
+    <p>Now, create a couple of VMs using our node management tool, <code class="highlighter-rouge">docker-machine</code>:</p>
+
+    <div class="language-shell highlighter-rouge">
+      <div class="highlight">
+        <div class="highlight highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker-machine create -d hyperv --hyperv-virtual-switch "myswitch" myvm1
+docker-machine create -d hyperv --hyperv-virtual-switch "myswitch" myvm2
+</code></pre></div>        </div>
+      </div>
+    </div>
+
+  </div>
+  <hr>
+</div>
+
+<h4 id="list-the-vms-and-get-their-ip-addresses">List the VMs and get their IP addresses</h4>
+
+<p>You now have two VMs created, named <code class="highlighter-rouge">myvm1</code> and <code class="highlighter-rouge">myvm2</code>.</p>
+
+<p>Use this command to list the machines and get their IP addresses.</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker-machine <span class="nb">ls</span>
+</code></pre></div></div>
+
+<p>Here is example output from this command.</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>docker-machine <span class="nb">ls
+</span>NAME    ACTIVE   DRIVER       STATE     URL                         SWARM   DOCKER        ERRORS
+myvm1   -        virtualbox   Running   tcp://192.168.99.100:2376           v17.06.2-ce   
+myvm2   -        virtualbox   Running   tcp://192.168.99.101:2376           v17.06.2-ce   
+</code></pre></div></div>
+
+<h4 id="initialize-the-swarm-and-add-nodes">Initialize the swarm and add nodes</h4>
+
+<p>The first machine acts as the manager, which executes management commands
+and authenticates workers to join the swarm, and the second is a worker.</p>
+
+<p>You can send commands to your VMs using <code class="highlighter-rouge">docker-machine ssh</code>. Instruct <code class="highlighter-rouge">myvm1</code>
+to become a swarm manager with <code class="highlighter-rouge">docker swarm init</code> and look for output like
+this:</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>docker-machine ssh myvm1 <span class="s2">"docker swarm init --advertise-addr &lt;myvm1 ip&gt;"</span>
+Swarm initialized: current node &lt;node ID&gt; is now a manager.
+
+To add a worker to this swarm, run the following <span class="nb">command</span>:
+
+  docker swarm join <span class="se">\</span>
+  <span class="nt">--token</span> &lt;token&gt; <span class="se">\</span>
+  &lt;myvm ip&gt;:&lt;port&gt;
+
+To add a manager to this swarm, run <span class="s1">'docker swarm join-token manager'</span> and follow the instructions.
+</code></pre></div></div>
+
+<blockquote>
+  <p>Ports 2377 and 2376</p>
+
+  <p>Always run <code class="highlighter-rouge">docker swarm init</code> and <code class="highlighter-rouge">docker swarm join</code> with port 2377
+(the swarm management port), or no port at all and let it take the default.</p>
+
+  <p>The machine IP addresses returned by <code class="highlighter-rouge">docker-machine ls</code> include port 2376,
+which is the Docker daemon port. Do not use this port or
+<a href="https://forums.docker.com/t/docker-swarm-join-with-virtualbox-connection-error-13-bad-certificate/31392/2" target="_blank" class="_">you may experience errors</a>.</p>
+</blockquote>
+
+<blockquote>
+  <p>Having trouble using SSH? Try the –native-ssh flag</p>
+
+  <p>Docker Machine has <a href="https://docs.docker.com/machine/reference/ssh/#different-types-of-ssh">the option to let you use your own system’s SSH</a>, if
+for some reason you’re having trouble sending commands to your Swarm manager. Just specify the
+<code class="highlighter-rouge">--native-ssh</code> flag when invoking the <code class="highlighter-rouge">ssh</code> command:</p>
+
+  <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker-machine --native-ssh ssh myvm1 ...
+</code></pre></div>  </div>
+</blockquote>
+
+<p>As you can see, the response to <code class="highlighter-rouge">docker swarm init</code> contains a pre-configured
+<code class="highlighter-rouge">docker swarm join</code> command for you to run on any nodes you want to add. Copy
+this command, and send it to <code class="highlighter-rouge">myvm2</code> via <code class="highlighter-rouge">docker-machine ssh</code> to have <code class="highlighter-rouge">myvm2</code>
+join your new swarm as a worker:</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>docker-machine ssh myvm2 <span class="s2">"docker swarm join </span><span class="se">\</span><span class="s2">
+--token &lt;token&gt; </span><span class="se">\</span><span class="s2">
+&lt;ip&gt;:2377"</span>
+
+This node joined a swarm as a worker.
+</code></pre></div></div>
+
+<p>Congratulations, you have created your first swarm!</p>
+
+<p>Run <code class="highlighter-rouge">docker node ls</code> on the manager to view the nodes in this swarm:</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>docker-machine ssh myvm1 <span class="s2">"docker node ls"</span>
+ID                            HOSTNAME            STATUS              AVAILABILITY        MANAGER STATUS
+brtu9urxwfd5j0zrmkubhpkbd     myvm2               Ready               Active
+rihwohkh3ph38fhillhhb84sk <span class="k">*</span>   myvm1               Ready               Active              Leader
+</code></pre></div></div>
+
+<blockquote>
+  <p>Leaving a swarm</p>
+
+  <p>If you want to start over, you can run <code class="highlighter-rouge">docker swarm leave</code> from each node.</p>
+</blockquote>
+
+<h2 id="deploy-your-app-on-the-swarm-cluster">Deploy your app on the swarm cluster</h2>
+
+<p>The hard part is over. Now you just repeat the process you used in <a href="https://docs.docker.com/get-started/part3/">part
+3</a> to deploy on your new swarm. Just remember that only swarm managers
+like <code class="highlighter-rouge">myvm1</code> execute Docker commands; workers are just for capacity.</p>
+
+<h3 id="configure-a-docker-machine-shell-to-the-swarm-manager">Configure a <code class="highlighter-rouge">docker-machine</code> shell to the swarm manager</h3>
+
+<p>So far, you’ve been wrapping Docker commands in <code class="highlighter-rouge">docker-machine ssh</code> to talk to
+the VMs. Another option is to run <code class="highlighter-rouge">docker-machine env &lt;machine&gt;</code> to get
+and run a command that configures your current shell to talk to the Docker
+daemon on the VM. This method works better for the next step because it allows
+you to use your local <code class="highlighter-rouge">docker-compose.yml</code> file to deploy the app
+“remotely” without having to copy it anywhere.</p>
+
+<p>Type <code class="highlighter-rouge">docker-machine env myvm1</code>, then copy-paste and run the command provided as
+the last line of the output to configure your shell to talk to <code class="highlighter-rouge">myvm1</code>, the
+swarm manager.</p>
+
+<p>The commands to configure your shell differ depending on whether you are Mac,
+Linux, or Windows, so examples of each are shown on the tabs below.</p>
+
+<ul class="nav nav-tabs">
+  <li class="active"><a data-toggle="tab" href="https://docs.docker.com/get-started/part4/#mac-linux-machine">Mac, Linux</a></li>
+  <li><a data-toggle="tab" href="https://docs.docker.com/get-started/part4/#win-machine">Windows</a></li>
+</ul>
+<div class="tab-content">
+  <div id="mac-linux-machine" class="tab-pane fade in active">
+    <h4 id="docker-machine-shell-environment-on-mac-or-linux">Docker machine shell environment on Mac or Linux</h4>
+    <p>Run <code class="highlighter-rouge">docker-machine env myvm1</code> to get the command to configure your shell to talk to <code class="highlighter-rouge">myvm1</code>.</p>
+    <div class="language-shell highlighter-rouge">
+      <div class="highlight">
+        <div class="highlight highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ docker-machine env myvm1
+export DOCKER_TLS_VERIFY="1"
+export DOCKER_HOST="tcp://192.168.99.100:2376"
+export DOCKER_CERT_PATH="/Users/sam/.docker/machine/machines/myvm1"
+export DOCKER_MACHINE_NAME="myvm1"
+# Run this command to configure your shell:
+# eval $(docker-machine env myvm1)
+</code></pre></div>        </div>
+      </div>
+    </div>
+    <p>Run the given command to configure your shell to talk to <code class="highlighter-rouge">myvm1</code>.</p>
+    <div class="language-shell highlighter-rouge">
+      <div class="highlight">
+        <div class="highlight highlighter-rouge"><div class="highlight"><pre class="highlight"><code>eval $(docker-machine env myvm1)
+</code></pre></div>        </div>
+      </div>
+    </div>
+    <p>Run <code class="highlighter-rouge">docker-machine ls</code> to verify that <code class="highlighter-rouge">myvm1</code> is now the active machine, as indicated by the asterisk next to it.</p>
+    <div class="language-shell highlighter-rouge">
+      <div class="highlight">
+        <div class="highlight highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ docker-machine ls
+NAME    ACTIVE   DRIVER       STATE     URL                         SWARM   DOCKER        ERRORS
+myvm1   *        virtualbox   Running   tcp://192.168.99.100:2376           v17.06.2-ce   
+myvm2   -        virtualbox   Running   tcp://192.168.99.101:2376           v17.06.2-ce   
+</code></pre></div>        </div>
+      </div>
+    </div>
+  </div>
+  <div id="win-machine" class="tab-pane fade">
+    <h4 id="docker-machine-shell-environment-on-windows">Docker machine shell environment on Windows</h4>
+    <p>Run <code class="highlighter-rouge">docker-machine env myvm1</code> to get the command to configure your shell to talk to <code class="highlighter-rouge">myvm1</code>.</p>
+    <div class="language-shell highlighter-rouge">
+      <div class="highlight">
+        <div class="highlight highlighter-rouge"><div class="highlight"><pre class="highlight"><code>PS C:\Users\sam\sandbox\get-started&gt; docker-machine env myvm1
+$Env:DOCKER_TLS_VERIFY = "1"
+$Env:DOCKER_HOST = "tcp://192.168.203.207:2376"
+$Env:DOCKER_CERT_PATH = "C:\Users\sam\.docker\machine\machines\myvm1"
+$Env:DOCKER_MACHINE_NAME = "myvm1"
+$Env:COMPOSE_CONVERT_WINDOWS_PATHS = "true"
+# Run this command to configure your shell:
+# &amp; "C:\Program Files\Docker\Docker\Resources\bin\docker-machine.exe" env myvm1 | Invoke-Expression
+</code></pre></div>        </div>
+      </div>
+    </div>
+    <p>Run the given command to configure your shell to talk to <code class="highlighter-rouge">myvm1</code>.</p>
+    <div class="language-shell highlighter-rouge">
+      <div class="highlight">
+        <div class="highlight highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&amp; "C:\Program Files\Docker\Docker\Resources\bin\docker-machine.exe" env myvm1 | Invoke-Expression
+</code></pre></div>        </div>
+      </div>
+    </div>
+    <p>Run <code class="highlighter-rouge">docker-machine ls</code> to verify that <code class="highlighter-rouge">myvm1</code> is the active machine as indicated by the asterisk next to it.</p>
+    <div class="language-shell highlighter-rouge">
+      <div class="highlight">
+        <div class="highlight highlighter-rouge"><div class="highlight"><pre class="highlight"><code>PS C:PATH&gt; docker-machine ls
+NAME    ACTIVE   DRIVER   STATE     URL                          SWARM   DOCKER        ERRORS
+myvm1   *        hyperv   Running   tcp://192.168.203.207:2376           v17.06.2-ce
+myvm2   -        hyperv   Running   tcp://192.168.200.181:2376           v17.06.2-ce
+</code></pre></div>        </div>
+      </div>
+    </div>
+  </div>
+  <hr>
+</div>
+
+<h3 id="deploy-the-app-on-the-swarm-manager">Deploy the app on the swarm manager</h3>
+
+<p>Now that you have <code class="highlighter-rouge">myvm1</code>, you can use its powers as a swarm manager to
+deploy your app by using the same <code class="highlighter-rouge">docker stack deploy</code> command you used in part
+3 to <code class="highlighter-rouge">myvm1</code>, and your local copy of <code class="highlighter-rouge">docker-compose.yml.</code>. This command may take a few seconds
+to complete and the deployment takes some time to be available. Use the
+<code class="highlighter-rouge">docker service ps &lt;service_name&gt;</code> command on a swarm manager to verify that
+all services have been redeployed.</p>
+
+<p>You are connected to <code class="highlighter-rouge">myvm1</code> by means of the <code class="highlighter-rouge">docker-machine</code> shell
+configuration, and you still have access to the files on your local host. Make
+sure you are in the same directory as before, which includes the
+<a href="https://docs.docker.com/get-started/part3/#docker-composeyml"><code class="highlighter-rouge">docker-compose.yml</code> file you created in part
+3</a>.</p>
+
+<p>Just like before, run the following command to deploy the app on <code class="highlighter-rouge">myvm1</code>.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker stack deploy <span class="nt">-c</span> docker-compose.yml getstartedlab
+</code></pre></div></div>
+
+<p>And that’s it, the app is deployed on a swarm cluster!</p>
+
+<blockquote>
+  <p><strong>Note</strong>: If your image is stored on a private registry instead of Docker Hub,
+you need to be logged in using <code class="highlighter-rouge">docker login &lt;your-registry&gt;</code> and then you
+need to add the <code class="highlighter-rouge">--with-registry-auth</code> flag to the above command. For example:</p>
+
+  <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker login registry.example.com
+
+docker stack deploy <span class="nt">--with-registry-auth</span> <span class="nt">-c</span> docker-compose.yml getstartedlab
+</code></pre></div>  </div>
+
+  <p>This passes the login token from your local client to the swarm nodes where the
+service is deployed, using the encrypted WAL logs. With this information, the
+nodes are able to log into the registry and pull the image.</p>
+
+</blockquote>
+
+<p>Now you can use the same <a href="https://docs.docker.com/get-started/part3/#run-your-new-load-balanced-app">docker commands you used in part
+3</a>. Only this time notice
+that the services (and associated containers) have been distributed between
+both <code class="highlighter-rouge">myvm1</code> and <code class="highlighter-rouge">myvm2</code>.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>docker stack ps getstartedlab
+
+ID            NAME                  IMAGE                   NODE   DESIRED STATE
+jq2g3qp8nzwx  getstartedlab_web.1   john/get-started:part2  myvm1  Running
+88wgshobzoxl  getstartedlab_web.2   john/get-started:part2  myvm2  Running
+vbb1qbkb0o2z  getstartedlab_web.3   john/get-started:part2  myvm2  Running
+ghii74p9budx  getstartedlab_web.4   john/get-started:part2  myvm1  Running
+0prmarhavs87  getstartedlab_web.5   john/get-started:part2  myvm2  Running
+</code></pre></div></div>
+
+<blockquote>
+  <p>Connecting to VMs with <code class="highlighter-rouge">docker-machine env</code> and <code class="highlighter-rouge">docker-machine ssh</code></p>
+
+  <ul>
+    <li>
+      <p>To set your shell to talk to a different machine like <code class="highlighter-rouge">myvm2</code>, simply re-run
+<code class="highlighter-rouge">docker-machine env</code> in the same or a different shell, then run the given
+command to point to <code class="highlighter-rouge">myvm2</code>. This is always specific to the current shell. If
+you change to an unconfigured shell or open a new one, you need to re-run the
+commands. Use <code class="highlighter-rouge">docker-machine ls</code> to list machines, see what state they are in,
+get IP addresses, and find out which one, if any, you are connected to. To learn
+more, see the <a href="https://docs.docker.com/machine/get-started/#create-a-machine">Docker Machine getting started topics</a>.</p>
+    </li>
+    <li>
+      <p>Alternatively, you can wrap Docker commands in the form of
+<code class="highlighter-rouge">docker-machine ssh &lt;machine&gt; "&lt;command&gt;"</code>, which logs directly into
+the VM but doesn’t give you immediate access to files on your local host.</p>
+    </li>
+    <li>
+      <p>On Mac and Linux, you can use <code class="highlighter-rouge">docker-machine scp &lt;file&gt; &lt;machine&gt;:~</code>
+to copy files across machines, but Windows users need a Linux terminal emulator
+like <a href="https://git-for-windows.github.io/" target="_blank" class="_">Git Bash</a> for this to work.</p>
+    </li>
+  </ul>
+
+  <p>This tutorial demos both <code class="highlighter-rouge">docker-machine ssh</code> and
+<code class="highlighter-rouge">docker-machine env</code>, since these are available on all platforms via the <code class="highlighter-rouge">docker-machine</code> CLI.</p>
+</blockquote>
+
+<h3 id="accessing-your-cluster">Accessing your cluster</h3>
+
+<p>You can access your app from the IP address of <strong>either</strong> <code class="highlighter-rouge">myvm1</code> or <code class="highlighter-rouge">myvm2</code>.</p>
+
+<p>The network you created is shared between them and load-balancing. Run
+<code class="highlighter-rouge">docker-machine ls</code> to get your VMs’ IP addresses and visit either of them on a
+browser, hitting refresh (or just <code class="highlighter-rouge">curl</code> them).</p>
+
+<p><img src="./Get Started, Part 4_ Swarms _ Docker Documentation_files/app-in-browser-swarm.png" alt="Hello World in browser"></p>
+
+<p>There are five possible container IDs all cycling by randomly, demonstrating
+the load-balancing.</p>
+
+<p>The reason both IP addresses work is that nodes in a swarm participate in an
+ingress <strong>routing mesh</strong>. This ensures that a service deployed at a certain port
+within your swarm always has that port reserved to itself, no matter what node
+is actually running the container. Here’s a diagram of how a routing mesh for a
+service called <code class="highlighter-rouge">my-web</code> published at port <code class="highlighter-rouge">8080</code> on a three-node swarm would
+look:</p>
+
+<p><img src="./Get Started, Part 4_ Swarms _ Docker Documentation_files/ingress-routing-mesh.png" alt="routing mesh diagram"></p>
+
+<blockquote>
+  <p>Having connectivity trouble?</p>
+
+  <p>Keep in mind that to use the ingress network in the swarm,
+you need to have the following ports open between the swarm nodes
+before you enable swarm mode:</p>
+
+  <ul>
+    <li>Port 7946 TCP/UDP for container network discovery.</li>
+    <li>Port 4789 UDP for the container ingress network.</li>
+  </ul>
+</blockquote>
+
+<h2 id="iterating-and-scaling-your-app">Iterating and scaling your app</h2>
+
+<p>From here you can do everything you learned about in parts 2 and 3.</p>
+
+<p>Scale the app by changing the <code class="highlighter-rouge">docker-compose.yml</code> file.</p>
+
+<p>Change the app behavior by editing code, then rebuild, and push the new image.
+(To do this, follow the same steps you took earlier to <a href="https://docs.docker.com/get-started/part2/#build-the-app">build the
+app</a> and <a href="https://docs.docker.com/get-started/part2/#publish-the-image">publish the
+image</a>).</p>
+
+<p>In either case, simply run <code class="highlighter-rouge">docker stack deploy</code> again to deploy these changes.</p>
+
+<p>You can join any machine, physical or virtual, to this swarm, using the
+same <code class="highlighter-rouge">docker swarm join</code> command you used on <code class="highlighter-rouge">myvm2</code>, and capacity is added
+to your cluster. Just run <code class="highlighter-rouge">docker stack deploy</code> afterwards, and your app can
+take advantage of the new resources.</p>
+
+<h2 id="cleanup-and-reboot">Cleanup and reboot</h2>
+
+<h3 id="stacks-and-swarms">Stacks and swarms</h3>
+
+<p>You can tear down the stack with <code class="highlighter-rouge">docker stack rm</code>. For example:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker stack rm getstartedlab
+</code></pre></div></div>
+
+<blockquote>
+  <p>Keep the swarm or remove it?</p>
+
+  <p>At some point later, you can remove this swarm if you want to with
+<code class="highlighter-rouge">docker-machine ssh myvm2 "docker swarm leave"</code> on the worker
+and <code class="highlighter-rouge">docker-machine ssh myvm1 "docker swarm leave --force"</code> on the
+manager, but <em>you need this swarm for part 5, so keep it
+around for now</em>.</p>
+</blockquote>
+
+<h3 id="unsetting-docker-machine-shell-variable-settings">Unsetting docker-machine shell variable settings</h3>
+
+<p>You can unset the <code class="highlighter-rouge">docker-machine</code> environment variables in your current shell
+with the following command:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>eval $(docker-machine env -u)
+</code></pre></div></div>
+
+<p>This disconnects the shell from <code class="highlighter-rouge">docker-machine</code> created virtual machines,
+and allows you to continue working in the same shell, now using native <code class="highlighter-rouge">docker</code>
+commands (for example, on Docker for Mac or Docker for Windows). To learn more,
+see the <a href="https://docs.docker.com/machine/get-started/#unset-environment-variables-in-the-current-shell">Machine topic on unsetting environment variables</a>.</p>
+
+<h3 id="restarting-docker-machines">Restarting Docker machines</h3>
+
+<p>If you shut down your local host, Docker machines stops running. You can check the status of machines by running <code class="highlighter-rouge">docker-machine ls</code>.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ docker-machine ls
+NAME    ACTIVE   DRIVER       STATE     URL   SWARM   DOCKER    ERRORS
+myvm1   -        virtualbox   Stopped                 Unknown
+myvm2   -        virtualbox   Stopped                 Unknown
+</code></pre></div></div>
+
+<p>To restart a machine that’s stopped, run:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker-machine start &lt;machine-name&gt;
+</code></pre></div></div>
+
+<p>For example:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ docker-machine start myvm1
+Starting "myvm1"...
+(myvm1) Check network to re-create if needed...
+(myvm1) Waiting for an IP...
+Machine "myvm1" was started.
+Waiting for SSH to be available...
+Detecting the provisioner...
+Started machines may have new IP addresses. You may need to re-run the `docker-machine env` command.
+
+$ docker-machine start myvm2
+Starting "myvm2"...
+(myvm2) Check network to re-create if needed...
+(myvm2) Waiting for an IP...
+Machine "myvm2" was started.
+Waiting for SSH to be available...
+Detecting the provisioner...
+Started machines may have new IP addresses. You may need to re-run the `docker-machine env` command.
+</code></pre></div></div>
+
+<p><a href="https://docs.docker.com/get-started/part5/" class="button outline-btn">On to Part 5&nbsp;»</a></p>
+
+<h2 id="recap-and-cheat-sheet-optional">Recap and cheat sheet (optional)</h2>
+
+<p>Here’s <a href="https://asciinema.org/a/113837">a terminal recording of what was covered on this
+page</a>:</p>
+
+<script type="text/javascript" src="./Get Started, Part 4_ Swarms _ Docker Documentation_files/113837.js" id="asciicast-113837" speed="2" async="" data-player="[object HTMLDivElement]"></script><div id="asciicast-container-113837" class="asciicast" style="display: block; float: none; overflow: hidden; padding: 0px; margin: 20px 0px;"><iframe src="./Get Started, Part 4_ Swarms _ Docker Documentation_files/embed.html" id="asciicast-iframe-113837" name="asciicast-iframe-113837" scrolling="no" allowfullscreen="true" style="overflow: hidden; margin: 0px; border: 0px; display: inline-block; width: 884px; float: none; visibility: visible; height: 419px;"></iframe></div>
+
+<p>In part 4 you learned what a swarm is, how nodes in swarms can be managers or
+workers, created a swarm, and deployed an application on it. You saw that the
+core Docker commands didn’t change from part 3, they just had to be targeted to
+run on a swarm master. You also saw the power of Docker’s networking in action,
+which kept load-balancing requests across containers, even though they were
+running on different machines. Finally, you learned how to iterate and scale
+your app on a cluster.</p>
+
+<p>Here are some commands you might like to run to interact with your swarm and your VMs a bit:</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker-machine create <span class="nt">--driver</span> virtualbox myvm1 <span class="c"># Create a VM (Mac, Win7, Linux)</span>
+docker-machine create <span class="nt">-d</span> hyperv <span class="nt">--hyperv-virtual-switch</span> <span class="s2">"myswitch"</span> myvm1 <span class="c"># Win10</span>
+docker-machine env myvm1                <span class="c"># View basic information about your node</span>
+docker-machine ssh myvm1 <span class="s2">"docker node ls"</span>         <span class="c"># List the nodes in your swarm</span>
+docker-machine ssh myvm1 <span class="s2">"docker node inspect &lt;node ID&gt;"</span>        <span class="c"># Inspect a node</span>
+docker-machine ssh myvm1 <span class="s2">"docker swarm join-token -q worker"</span>   <span class="c"># View join token</span>
+docker-machine ssh myvm1   <span class="c"># Open an SSH session with the VM; type "exit" to end</span>
+docker node <span class="nb">ls</span>                <span class="c"># View nodes in swarm (while logged on to manager)</span>
+docker-machine ssh myvm2 <span class="s2">"docker swarm leave"</span>  <span class="c"># Make the worker leave the swarm</span>
+docker-machine ssh myvm1 <span class="s2">"docker swarm leave -f"</span> <span class="c"># Make master leave, kill swarm</span>
+docker-machine <span class="nb">ls</span> <span class="c"># list VMs, asterisk shows which VM this shell is talking to</span>
+docker-machine start myvm1            <span class="c"># Start a VM that is currently not running</span>
+docker-machine env myvm1      <span class="c"># show environment variables and command for myvm1</span>
+<span class="nb">eval</span> <span class="k">$(</span>docker-machine env myvm1<span class="k">)</span>         <span class="c"># Mac command to connect shell to myvm1</span>
+&amp; <span class="s2">"C:</span><span class="se">\P</span><span class="s2">rogram Files</span><span class="se">\D</span><span class="s2">ocker</span><span class="se">\D</span><span class="s2">ocker</span><span class="se">\R</span><span class="s2">esources</span><span class="se">\b</span><span class="s2">in</span><span class="se">\d</span><span class="s2">ocker-machine.exe"</span> env myvm1 | Invoke-Expression   <span class="c"># Windows command to connect shell to myvm1</span>
+docker stack deploy <span class="nt">-c</span> &lt;file&gt; &lt;app&gt;  <span class="c"># Deploy an app; command shell must be set to talk to manager (myvm1), uses local Compose file</span>
+docker-machine scp docker-compose.yml myvm1:~ <span class="c"># Copy file to node's home dir (only required if you use ssh to connect to manager and deploy the app)</span>
+docker-machine ssh myvm1 <span class="s2">"docker stack deploy -c &lt;file&gt; &lt;app&gt;"</span>   <span class="c"># Deploy an app using ssh (you must have first copied the Compose file to myvm1)</span>
+<span class="nb">eval</span> <span class="k">$(</span>docker-machine env <span class="nt">-u</span><span class="k">)</span>     <span class="c"># Disconnect shell from VMs, use native docker</span>
+docker-machine stop <span class="k">$(</span>docker-machine <span class="nb">ls</span> <span class="nt">-q</span><span class="k">)</span>               <span class="c"># Stop all running VMs</span>
+docker-machine rm <span class="k">$(</span>docker-machine <span class="nb">ls</span> <span class="nt">-q</span><span class="k">)</span> <span class="c"># Delete all VMs and their disk images</span>
+</code></pre></div></div>
+
+							
+							<!-- tags -->
+							
+							
+							
+							<span class="glyphicon glyphicon-tags" style="padding-right: 10px"></span><span style="vertical-align: 2px"><a href="https://docs.docker.com/glossary/?term=swarm">swarm</a>, <a href="https://docs.docker.com/glossary/?term=scale">scale</a>, <a href="https://docs.docker.com/glossary/?term=cluster">cluster</a>, <a href="https://docs.docker.com/glossary/?term=machine">machine</a>, <a href="https://docs.docker.com/glossary/?term=vm">vm</a>, <a href="https://docs.docker.com/glossary/?term=manager">manager</a>, <a href="https://docs.docker.com/glossary/?term=worker">worker</a>, <a href="https://docs.docker.com/glossary/?term=deploy">deploy</a>, <a href="https://docs.docker.com/glossary/?term=ssh">ssh</a>, <a href="https://docs.docker.com/glossary/?term=orchestration">orchestration</a></span>
+							
+							<!-- link corrections -->
+              <script language="JavaScript">
+							var x = document.links.length;
+							var baseHref = document.getElementsByTagName('base')[0].href
+							for (i = 0; i < x; i++) {
+							  var munged = false;
+							  var thisHREF = document.links[i].href;
+							  var originalURL = "/get-started/part4/";
+							  if (thisHREF.indexOf(baseHref + "#") > -1) {
+							    // hash fix
+							    //console.log('BEFORE: base:',baseHref,'thisHREF:',thisHREF,'originalURL:',originalURL);
+							    thisHREF = originalURL + thisHREF.replace(baseHref, "");
+							    //console.log('AFTER: base:',baseHref,'thisHREF:',thisHREF,'originalURL:',originalURL);
+							  }
+							  if ((thisHREF.indexOf(window.location.hostname) > -1 || thisHREF.indexOf('http') == -1) && document.links[i].className.indexOf("nomunge") < 0) {
+							    munged = true;
+							    thisHREF = thisHREF.replace(".md", "/").replace("/index/", "/");
+							    document.links[i].setAttribute('href', thisHREF);
+							  }
+							}
+							</script>
+							
+						  <div id="ratings-div" style="color: rgb(185, 194, 204); text-align: center; margin-top: 150px; visibility: visible;">
+								<div id="pd_rating_holder_8453675" style="display: inline-block;"><div class="rating-msg" id="PDRTJS_8453675_msg" style="text-align: center; font:normal normal 12px/20px verdana; color: #333333;">Rate this page:</div><p style="padding: 0px; margin: 0px; clear: both;"></p><div class="rating-icons" id="pd_rate_8453675" style="float:left;"><div class="rating-nero-icon" onmouseout="PDRTJS_8453675.rebuild();" onclick="PDRTJS_8453675.rate(1);" onmouseover="PDRTJS_8453675.hover(1);" id="PDRTJS_8453675_nero_1" style="background-size: 32px 32px !important; cursor: pointer; width: 16px; height: 16px;  line-height: 16px; background: url(https://polldaddy.com/images/ratings/nero-hand-sml@2x.png) bottom left; float: left; padding: 0px; margin: 0px; margin: 0px;">&nbsp;</div><div class="rating-nero-value" id="PDRTJS_8453675_msg_1" style="text-align: center; font:normal normal 12px/20px verdana; color: #333333; float:left; padding: 0px 4px;">450</div><div class="rating-nero-icon" onmouseout="PDRTJS_8453675.rebuild();" onclick="PDRTJS_8453675.rate(2);" onmouseover="PDRTJS_8453675.hover(2);" id="PDRTJS_8453675_nero_2" style="background-size: 32px 32px !important; cursor: pointer; width: 16px; height: 16px;  line-height: 16px; background: url(https://polldaddy.com/images/ratings/nero-hand-sml@2x.png) bottom right; float: left; padding: 0px; margin: 0px; margin: 0px;">&nbsp;</div><div class="rating-nero-value" id="PDRTJS_8453675_msg_2" style="text-align: center; font:normal normal 12px/20px verdana; color: #333333; float:left; padding: 0px 4px;">117</div></div><span style="float:left;">&nbsp;</span><div id="rating_info_8453675" style="display:none;float:left;background:url(https://polldaddy.com/images/ratings/info@2x.png) no-repeat 3px 2px;width:16px;height:16px;cursor:pointer; background-size:12px 12px; " onclick="javascript:PDRTJS_8453675.togglePopup();return false;"><span style="display:none;">i</span></div><div class="pd_popup_holder" id="pd_popup_holder_8453675">&nbsp;</div></div>
+								<script type="text/javascript">
+									PDRTJS_settings_8453675 = {
+										"id": "8453675",
+										"unique_id": "get-started/part4.md",
+										"title": "Get Started, Part 4: Swarms",
+										"permalink": "https://github.com/docker/docker.github.io/blob/master/get-started/part4.md"
+									};
+									(function(d, c, j) {
+										if (!document.getElementById(j)) {
+											var pd = d.createElement(c),
+												s;
+											pd.id = j;
+											pd.src = ('https:' == document.location.protocol) ? 'https://polldaddy.com/js/rating/rating.js' : 'http://i0.poll.fm/js/rating/rating.js';
+											s = document.getElementsByTagName(c)[0];
+											s.parentNode.insertBefore(pd, s);
+										}
+									}(document, 'script', 'pd-rating-js'));
+								</script>
+							</div>
+							
+						</section>
+					</main>
+					<nav class="col-nav">
+						<div id="sidebar-nav" class="sidebar hidden-sm hidden-xs">
+						<div id="navbar" class="nav-sidebar">
+    <ul class="nav" id="jsTOCLeftNav"><li><a onclick="navClicked(1)" data-target="#item1" data-toggle="collapse" data-parent="#stacked-menu" class="collapsed" aria-expanded="false">Get Docker<span class="caret arrow"></span></a><ul class="nav collapse" id="#item1" aria-expanded="false"><li><a href="https://docs.docker.com/install/">Install Docker</a></li><li><a onclick="navClicked(3)" data-target="#item3" data-toggle="collapse" data-parent="#stacked-menu" class="collapsed" aria-expanded="false">Docker EE<span class="caret arrow"></span></a><ul class="nav collapse" id="#item3" aria-expanded="false"><li><a href="https://docs.docker.com/install/windows/docker-ee/">Windows Server</a></li><li><a href="https://docs.docker.com/install/linux/docker-ee/ubuntu/">Ubuntu</a></li><li><a href="https://docs.docker.com/install/linux/docker-ee/rhel/">RHEL</a></li><li><a href="https://docs.docker.com/install/linux/docker-ee/centos/">CentOS</a></li><li><a href="https://docs.docker.com/install/linux/docker-ee/oracle/">Oracle Linux</a></li><li><a href="https://docs.docker.com/install/linux/docker-ee/suse/">SLES</a></li></ul></li><li><a onclick="navClicked(10)" data-target="#item10" data-toggle="collapse" data-parent="#stacked-menu" class="collapsed" aria-expanded="false">Docker CE<span class="caret arrow"></span></a><ul class="nav collapse" id="#item10" aria-expanded="false"><li><a href="https://docs.docker.com/docker-for-mac/install/">Mac</a></li><li><a href="https://docs.docker.com/docker-for-windows/install/">Windows</a></li><li><a href="https://docs.docker.com/install/linux/docker-ce/ubuntu/">Ubuntu</a></li><li><a href="https://docs.docker.com/install/linux/docker-ce/debian/">Debian</a></li><li><a href="https://docs.docker.com/install/linux/docker-ce/centos/">CentOS</a></li><li><a href="https://docs.docker.com/install/linux/docker-ce/fedora/">Fedora</a></li><li><a href="https://docs.docker.com/install/linux/docker-ce/binaries/">Binaries</a></li></ul></li><li><a onclick="navClicked(18)" data-target="#item18" data-toggle="collapse" data-parent="#stacked-menu" class="collapsed" aria-expanded="false">Platforms supporting Docker EE and Docker CE<span class="caret arrow"></span></a><ul class="nav collapse" id="#item18" aria-expanded="false"><li><a href="https://docs.docker.com/install/linux/centos/">CentOS</a></li><li><a href="https://docs.docker.com/install/linux/ubuntu/">Ubuntu</a></li></ul></li><li><a href="https://docs.docker.com/install/linux/linux-postinstall/">Optional Linux post-installation steps</a></li><li><a onclick="navClicked(22)" data-target="#item22" data-toggle="collapse" data-parent="#stacked-menu" class="collapsed" aria-expanded="false">Docker Edge<span class="caret arrow"></span></a><ul class="nav collapse" id="#item22" aria-expanded="false"><li><a href="https://docs.docker.com/edge/">Overview</a></li><li><a href="https://docs.docker.com/edge/engine/reference/commandline/docker/">Docker Edge CLI reference</a></li></ul></li><li><a onclick="navClicked(25)" data-target="#item25" data-toggle="collapse" data-parent="#stacked-menu" class="collapsed" aria-expanded="false">Docker for IBM Cloud (Beta)<span class="caret arrow"></span></a><ul class="nav collapse" id="#item25" aria-expanded="false"><li><a href="https://docs.docker.com/docker-for-ibm-cloud/why/">Why Docker for IBM Cloud?</a></li><li><a href="https://docs.docker.com/docker-for-ibm-cloud/quickstart/">Quick start</a></li><li><a href="https://docs.docker.com/docker-for-ibm-cloud/">Setup &amp; prerequisites</a></li><li><a href="https://docs.docker.com/docker-for-ibm-cloud/administering-swarms/">Administer clusters</a></li><li><a href="https://docs.docker.com/docker-for-ibm-cloud/scaling/">Scale clusters</a></li><li><a href="https://docs.docker.com/docker-for-ibm-cloud/deploy/">Deploy apps</a></li><li><a href="https://docs.docker.com/docker-for-ibm-cloud/binding-services/">Bind IBM Cloud services</a></li><li><a onclick="navClicked(33)" data-target="#item33" data-toggle="collapse" data-parent="#stacked-menu" class="collapsed" aria-expanded="false">Use registry images in clusters<span class="caret arrow"></span></a><ul class="nav collapse" id="#item33" aria-expanded="false"><li><a href="https://docs.docker.com/docker-for-ibm-cloud/registry/">Registry overview</a></li><li><a href="https://docs.docker.com/docker-for-ibm-cloud/dtr-ibm-cos/">Set up DTR to use IBM Cloud Object Storage</a></li><li><a href="https://docs.docker.com/docker-for-ibm-cloud/ibm-registry/">Use images in IBM Cloud Container Registry</a></li></ul></li><li><a href="https://docs.docker.com/docker-for-ibm-cloud/persistent-data-volumes/">Save persistent data in storage volumes</a></li><li><a href="https://docs.docker.com/docker-for-ibm-cloud/load-balancer/">Use a load balancer</a></li><li><a href="https://docs.docker.com/docker-for-ibm-cloud/logging/">Send logging and metric data to IBM Cloud</a></li><li><a href="https://docs.docker.com/docker-for-ibm-cloud/cli-ref/">CLI reference for bx d4ic commands</a></li><li><a href="https://docs.docker.com/docker-for-ibm-cloud/faqs/">FAQs</a></li><li><a href="https://docs.docker.com/docker-for-ibm-cloud/opensource/">Open source licensing</a></li><li><a href="https://docs.docker.com/docker-for-ibm-cloud/release-notes/">Release notes</a></li></ul></li><li><a onclick="navClicked(44)" data-target="#item44" data-toggle="collapse" data-parent="#stacked-menu" class="collapsed" aria-expanded="false">Docker for AWS<span class="caret arrow"></span></a><ul class="nav collapse" id="#item44" aria-expanded="false"><li><a href="https://docs.docker.com/docker-for-aws/why/">Why Docker for AWS?</a></li><li><a href="https://docs.docker.com/docker-for-aws/">Setup &amp; prerequisites</a></li><li><a href="https://docs.docker.com/docker-for-aws/iam-permissions/">IAM permissions</a></li><li><a href="https://docs.docker.com/docker-for-aws/scaling/">Scaling</a></li><li><a href="https://docs.docker.com/docker-for-aws/upgrade/">Upgrading</a></li><li><a href="https://docs.docker.com/docker-for-aws/deploy/">Deploy your app</a></li><li><a href="https://docs.docker.com/docker-for-aws/persistent-data-volumes/">Persistent data volumes</a></li><li><a href="https://docs.docker.com/docker-for-aws/load-balancer/">Load balancer</a></li><li><a href="https://docs.docker.com/docker-for-aws/faqs/">FAQs</a></li><li><a href="https://docs.docker.com/docker-for-aws/opensource/">Open source licensing</a></li><li><a href="https://docs.docker.com/docker-for-aws/release-notes/">Release notes</a></li><li><a href="https://docs.docker.com/docker-for-aws/archive/">Template archive</a></li></ul></li><li><a onclick="navClicked(57)" data-target="#item57" data-toggle="collapse" data-parent="#stacked-menu" class="collapsed" aria-expanded="false">Docker for Azure<span class="caret arrow"></span></a><ul class="nav collapse" id="#item57" aria-expanded="false"><li><a href="https://docs.docker.com/docker-for-azure/why/">Why Docker for Azure?</a></li><li><a href="https://docs.docker.com/docker-for-azure/">Setup &amp; prerequisites</a></li><li><a href="https://docs.docker.com/docker-for-azure/upgrade/">Upgrading</a></li><li><a href="https://docs.docker.com/docker-for-azure/deploy/">Deploy your app</a></li><li><a href="https://docs.docker.com/docker-for-azure/persistent-data-volumes/">Persistent data volumes</a></li><li><a href="https://docs.docker.com/docker-for-azure/faqs/">FAQs</a></li><li><a href="https://docs.docker.com/docker-for-azure/opensource/">Open source licensing</a></li><li><a href="https://docs.docker.com/docker-for-azure/release-notes/">Release notes</a></li><li><a href="https://docs.docker.com/docker-for-azure/archive/">Template archive</a></li></ul></li><li><a onclick="navClicked(67)" data-target="#item67" data-toggle="collapse" data-parent="#stacked-menu" class="collapsed" aria-expanded="false">Docker Toolbox (legacy)<span class="caret arrow"></span></a><ul class="nav collapse" id="#item67" aria-expanded="false"><li><a href="https://docs.docker.com/toolbox/overview/">Toolbox overview</a></li><li><a href="https://docs.docker.com/toolbox/toolbox_install_mac/">Install Toolbox on Mac</a></li><li><a href="https://docs.docker.com/toolbox/toolbox_install_windows/">Install Toolbox on Windows</a></li><li><a onclick="navClicked(71)" data-target="#item71" data-toggle="collapse" data-parent="#stacked-menu" class="collapsed" aria-expanded="false">Kitematic<span class="caret arrow"></span></a><ul class="nav collapse" id="#item71" aria-expanded="false"><li><a href="https://docs.docker.com/kitematic/userguide/">Kitematic user guide: intro &amp; overview</a></li><li><a href="https://docs.docker.com/kitematic/nginx-web-server/">Set up an Nginx web server</a></li><li><a href="https://docs.docker.com/kitematic/minecraft-server/">Set up a Minecraft Server</a></li><li><a href="https://docs.docker.com/kitematic/rethinkdb-dev-database/">Creating a local RethinkDB database for development</a></li><li><a href="https://docs.docker.com/kitematic/faq/">Frequently asked questions</a></li><li><a href="https://docs.docker.com/kitematic/known-issues/">Known issues</a></li></ul></li><li><a href="https://docs.docker.com/toolbox/faqs/troubleshoot/">Troubleshooting</a></li></ul></li><li><a onclick="navClicked(79)" data-target="#item79" data-toggle="collapse" data-parent="#stacked-menu" class="collapsed" aria-expanded="false">Compatibility between Docker versions<span class="caret arrow"></span></a><ul class="nav collapse" id="#item79" aria-expanded="false"><li><a href="https://docs.docker.com/engine/migration/">Migrate to Docker 1.10</a></li><li><a href="https://docs.docker.com/engine/breaking_changes/">Breaking changes</a></li><li><a href="https://docs.docker.com/engine/deprecated/">Deprecated Docker features</a></li><li><a href="https://docs.docker.com/engine/faq/">FAQ</a></li></ul></li><li><a onclick="navClicked(84)" data-target="#item84" data-toggle="collapse" data-parent="#stacked-menu" class="collapsed" aria-expanded="false">Release notes<span class="caret arrow"></span></a><ul class="nav collapse" id="#item84" aria-expanded="false"><li><a href="https://docs.docker.com/enterprise/release-notes/">Docker EE</a></li><li><a href="https://docs.docker.com/release-notes/docker-ce/">Docker CE</a></li></ul></li></ul></li><li><a onclick="navClicked(87)" data-target="#item87" data-toggle="collapse" data-parent="#stacked-menu" aria-expanded="true">Get started<span class="caret arrow"></span></a><ul class="nav collapse in" id="#item87" aria-expanded="true"><li><a onclick="navClicked(88)" data-target="#item88" data-toggle="collapse" data-parent="#stacked-menu" aria-expanded="true">Get started with Docker<span class="caret arrow"></span></a><ul class="nav collapse in" id="#item88" aria-expanded="true"><li><a href="https://docs.docker.com/get-started/">Part 1: Orientation</a></li><li><a href="https://docs.docker.com/get-started/part2/">Part 2: Containers</a></li><li><a href="https://docs.docker.com/get-started/part3/">Part 3: Services</a></li><li><a href="https://docs.docker.com/get-started/part4/" class="active currentPage">Part 4: Swarms</a></li><li><a href="https://docs.docker.com/get-started/part5/">Part 5: Stacks</a></li><li><a href="https://docs.docker.com/get-started/part6/">Part 6: Deploy your app</a></li></ul></li><li><a href="https://docs.docker.com/engine/docker-overview/">Docker overview</a></li></ul></li><li><a onclick="navClicked(96)" data-target="#item96" data-toggle="collapse" data-parent="#stacked-menu" class="collapsed" aria-expanded="false">Develop with Docker<span class="caret arrow"></span></a><ul class="nav collapse" id="#item96" aria-expanded="false"><li><a onclick="navClicked(97)" data-target="#item97" data-toggle="collapse" data-parent="#stacked-menu" class="collapsed" aria-expanded="false">Develop your apps on Docker<span class="caret arrow"></span></a><ul class="nav collapse" id="#item97" aria-expanded="false"><li><a href="https://docs.docker.com/develop/">App development overview</a></li><li><a href="https://docs.docker.com/develop/dev-best-practices/">App development best practices</a></li><li><a onclick="navClicked(100)" data-target="#item100" data-toggle="collapse" data-parent="#stacked-menu" class="collapsed" aria-expanded="false">Develop images<span class="caret arrow"></span></a><ul class="nav collapse" id="#item100" aria-expanded="false"><li><a href="https://docs.docker.com/develop/develop-images/dockerfile_best-practices/">Best practices for writing Dockerfiles</a></li><li><a href="https://docs.docker.com/develop/develop-images/baseimages/">Create a base image</a></li><li><a href="https://docs.docker.com/develop/develop-images/multistage-build/">Use multi-stage builds</a></li><li><a href="https://docs.docker.com/engine/reference/builder/">Dockerfile reference</a></li><li><a href="https://docs.docker.com/develop/develop-images/image_management/">Manage images</a></li></ul></li><li><a href="https://docs.docker.com/samples/">Docker app examples</a></li></ul></li><li><a onclick="navClicked(107)" data-target="#item107" data-toggle="collapse" data-parent="#stacked-menu" class="collapsed" aria-expanded="false">Develop using the Docker Engine SDKs and API<span class="caret arrow"></span></a><ul class="nav collapse" id="#item107" aria-expanded="false"><li><a href="https://docs.docker.com/develop/sdk/">Overview</a></li><li><a href="https://docs.docker.com/develop/sdk/examples/">SDK and API examples</a></li></ul></li></ul></li><li><a onclick="navClicked(110)" data-target="#item110" data-toggle="collapse" data-parent="#stacked-menu" class="collapsed" aria-expanded="false">Configure networking<span class="caret arrow"></span></a><ul class="nav collapse" id="#item110" aria-expanded="false"><li><a href="https://docs.docker.com/network/">Networking overview</a></li><li><a href="https://docs.docker.com/network/bridge/">Use bridge networks</a></li><li><a href="https://docs.docker.com/network/overlay/">Use overlay networks</a></li><li><a href="https://docs.docker.com/network/host/">Use host networking</a></li><li><a href="https://docs.docker.com/network/macvlan/">Use Macvlan networks</a></li><li><a href="https://docs.docker.com/network/none/">Disable networking for a container</a></li><li><a onclick="navClicked(117)" data-target="#item117" data-toggle="collapse" data-parent="#stacked-menu" class="collapsed" aria-expanded="false">Networking tutorials<span class="caret arrow"></span></a><ul class="nav collapse" id="#item117" aria-expanded="false"><li><a href="https://docs.docker.com/network/network-tutorial-standalone/">Bridge network tutorial</a></li><li><a href="https://docs.docker.com/network/network-tutorial-host/">Host networking tutorial</a></li><li><a href="https://docs.docker.com/network/network-tutorial-overlay/">Overlay networking tutorial</a></li><li><a href="https://docs.docker.com/network/network-tutorial-macvlan/">Macvlan network tutorial</a></li></ul></li><li><a onclick="navClicked(122)" data-target="#item122" data-toggle="collapse" data-parent="#stacked-menu" class="collapsed" aria-expanded="false">Configure the daemon and containers<span class="caret arrow"></span></a><ul class="nav collapse" id="#item122" aria-expanded="false"><li><a href="https://docs.docker.com/config/daemon/ipv6/">Configure the daemon for IPv6</a></li><li><a href="https://docs.docker.com/network/iptables/">Docker and iptables</a></li><li><a href="https://docs.docker.com/config/containers/container-networking/">Container networking</a></li><li><a href="https://docs.docker.com/network/proxy/">Configure Docker to use a proxy server</a></li></ul></li><li><a onclick="navClicked(127)" data-target="#item127" data-toggle="collapse" data-parent="#stacked-menu" class="collapsed" aria-expanded="false">Legacy networking content<span class="caret arrow"></span></a><ul class="nav collapse" id="#item127" aria-expanded="false"><li><a href="https://docs.docker.com/network/links/">(Legacy) Container links</a></li><li><a href="https://docs.docker.com/network/overlay-standalone.swarm/">Overlay networks for Swarm Classic</a></li></ul></li></ul></li><li><a onclick="navClicked(130)" data-target="#item130" data-toggle="collapse" data-parent="#stacked-menu" class="collapsed" aria-expanded="false">Manage application data<span class="caret arrow"></span></a><ul class="nav collapse" id="#item130" aria-expanded="false"><li><a href="https://docs.docker.com/storage/">Storage overview</a></li><li><a href="https://docs.docker.com/storage/volumes/">Volumes</a></li><li><a href="https://docs.docker.com/storage/bind-mounts/">Bind mounts</a></li><li><a href="https://docs.docker.com/storage/tmpfs/">tmpfs mounts</a></li><li><a href="https://docs.docker.com/storage/troubleshooting_volume_errors/">Troubleshoot volume problems</a></li><li><a onclick="navClicked(136)" data-target="#item136" data-toggle="collapse" data-parent="#stacked-menu" class="collapsed" aria-expanded="false">Store data within containers<span class="caret arrow"></span></a><ul class="nav collapse" id="#item136" aria-expanded="false"><li><a href="https://docs.docker.com/storage/storagedriver/">About storage drivers</a></li><li><a href="https://docs.docker.com/storage/storagedriver/select-storage-driver/">Select a storage driver</a></li><li><a href="https://docs.docker.com/storage/storagedriver/aufs-driver/">Use the AUFS storage driver</a></li><li><a href="https://docs.docker.com/storage/storagedriver/btrfs-driver/">Use the Btrfs storage driver</a></li><li><a href="https://docs.docker.com/storage/storagedriver/device-mapper-driver/">Use the Device mapper storage driver</a></li><li><a href="https://docs.docker.com/storage/storagedriver/overlayfs-driver/">Use the OverlayFS storage driver</a></li><li><a href="https://docs.docker.com/storage/storagedriver/zfs-driver/">Use the ZFS storage driver</a></li><li><a href="https://docs.docker.com/storage/storagedriver/vfs-driver/">Use the VFS storage driver</a></li></ul></li></ul></li><li><a onclick="navClicked(145)" data-target="#item145" data-toggle="collapse" data-parent="#stacked-menu" class="collapsed" aria-expanded="false">Run your app in production<span class="caret arrow"></span></a><ul class="nav collapse" id="#item145" aria-expanded="false"><li><a onclick="navClicked(146)" data-target="#item146" data-toggle="collapse" data-parent="#stacked-menu" class="collapsed" aria-expanded="false">Configure all objects<span class="caret arrow"></span></a><ul class="nav collapse" id="#item146" aria-expanded="false"><li><a href="https://docs.docker.com/config/labels-custom-metadata/">Apply custom metadata to objects</a></li><li><a href="https://docs.docker.com/config/pruning/">Prune unused objects</a></li><li><a href="https://docs.docker.com/config/formatting/">Format command and log output</a></li></ul></li><li><a onclick="navClicked(150)" data-target="#item150" data-toggle="collapse" data-parent="#stacked-menu" class="collapsed" aria-expanded="false">Configure the daemon<span class="caret arrow"></span></a><ul class="nav collapse" id="#item150" aria-expanded="false"><li><a href="https://docs.docker.com/config/daemon/">Configure and run Docker</a></li><li><a href="https://docs.docker.com/config/daemon/systemd/">Control Docker with systemd</a></li><li><a href="https://docs.docker.com/config/labels-custom-metadata/">Apply custom metadata to daemons</a></li><li><a href="https://docs.docker.com/config/containers/logging/">Configuring default drivers</a></li><li><a href="https://docs.docker.com/config/thirdparty/prometheus/">Collect Docker metrics with Prometheus</a></li></ul></li><li><a onclick="navClicked(156)" data-target="#item156" data-toggle="collapse" data-parent="#stacked-menu" class="collapsed" aria-expanded="false">Configure containers<span class="caret arrow"></span></a><ul class="nav collapse" id="#item156" aria-expanded="false"><li><a href="https://docs.docker.com/config/containers/start-containers-automatically/">Start containers automatically</a></li><li><a href="https://docs.docker.com/config/containers/live-restore/">Keep containers alive during daemon downtime</a></li><li><a href="https://docs.docker.com/config/containers/multi-service_container/">Run multiple services in a container</a></li><li><a href="https://docs.docker.com/config/containers/runmetrics/">Container runtime metrics</a></li><li><a href="https://docs.docker.com/config/containers/resource_constraints/">Limit a container's resources</a></li><li><a href="https://docs.docker.com/config/labels-custom-metadata/">Apply custom metadata to containers</a></li><li><a href="https://docs.docker.com/config/pruning/">Prune unused containers</a></li><li><a onclick="navClicked(164)" data-target="#item164" data-toggle="collapse" data-parent="#stacked-menu" class="collapsed" aria-expanded="false">Logging<span class="caret arrow"></span></a><ul class="nav collapse" id="#item164" aria-expanded="false"><li><a href="https://docs.docker.com/config/containers/logging/">View a container's logs</a></li><li><a href="https://docs.docker.com/config/containers/logging/configure/">Configure logging drivers</a></li><li><a href="https://docs.docker.com/config/containers/logging/plugins/">Use a logging driver plugin</a></li><li><a href="https://docs.docker.com/config/containers/logging/log_tags/">Customize log driver output</a></li><li><a onclick="navClicked(169)" data-target="#item169" data-toggle="collapse" data-parent="#stacked-menu" class="collapsed" aria-expanded="false">Logging driver details<span class="caret arrow"></span></a><ul class="nav collapse" id="#item169" aria-expanded="false"><li><a href="https://docs.docker.com/config/containers/logging/logentries/">Logentries logging driver</a></li><li><a href="https://docs.docker.com/config/containers/logging/json-file/">JSON File logging driver</a></li><li><a href="https://docs.docker.com/config/containers/logging/gelf/">Graylog Extended Format (GELF) logging driver</a></li><li><a href="https://docs.docker.com/config/containers/logging/syslog/">Syslog logging driver</a></li><li><a href="https://docs.docker.com/config/containers/logging/awslogs/">Amazon CloudWatch logs logging driver</a></li><li><a href="https://docs.docker.com/config/containers/logging/etwlogs/">ETW logging driver</a></li><li><a href="https://docs.docker.com/config/containers/logging/fluentd/">Fluentd logging driver</a></li><li><a href="https://docs.docker.com/config/containers/logging/gcplogs/">Google Cloud logging driver</a></li><li><a href="https://docs.docker.com/config/containers/logging/journald/">Journald logging driver</a></li><li><a href="https://docs.docker.com/config/containers/logging/splunk/">Splunk logging driver</a></li></ul></li></ul></li><li><a href="https://docs.docker.com/registry/recipes/mirror/">Run a local registry mirror</a></li><li><a onclick="navClicked(181)" data-target="#item181" data-toggle="collapse" data-parent="#stacked-menu" class="collapsed" aria-expanded="false">Work with external tools<span class="caret arrow"></span></a><ul class="nav collapse" id="#item181" aria-expanded="false"><li><a href="https://docs.docker.com/config/thirdparty/dsc/">PowerShell DSC usage</a></li><li><a href="https://docs.docker.com/config/thirdparty/ansible/">Ansible</a></li><li><a href="https://docs.docker.com/config/thirdparty/chef/">Chef</a></li><li><a href="https://docs.docker.com/config/thirdparty/puppet/">Puppet</a></li><li><a href="https://docs.docker.com/config/thirdparty/ambassador_pattern_linking/">(Obsolete) Link via an ambassador container</a></li></ul></li><li><a onclick="navClicked(187)" data-target="#item187" data-toggle="collapse" data-parent="#stacked-menu" class="collapsed" aria-expanded="false">Security<span class="caret arrow"></span></a><ul class="nav collapse" id="#item187" aria-expanded="false"><li><a href="https://docs.docker.com/engine/security/security/">Docker security</a></li><li><a href="https://docs.docker.com/engine/security/non-events/">Docker security non-events</a></li><li><a href="https://docs.docker.com/engine/security/https/">Protect the Docker daemon socket</a></li><li><a href="https://docs.docker.com/engine/security/certificates/">Using certificates for repository client verification</a></li><li><a onclick="navClicked(192)" data-target="#item192" data-toggle="collapse" data-parent="#stacked-menu" class="collapsed" aria-expanded="false">Use trusted images<span class="caret arrow"></span></a><ul class="nav collapse" id="#item192" aria-expanded="false"><li><a href="https://docs.docker.com/engine/security/trust/content_trust/">Content trust in Docker</a></li><li><a href="https://docs.docker.com/engine/security/trust/trust_automation/">Automation with content trust</a></li><li><a href="https://docs.docker.com/engine/security/trust/trust_delegation/">Delegations for content trust</a></li><li><a href="https://docs.docker.com/engine/security/trust/deploying_notary/">Deploying Notary</a></li><li><a href="https://docs.docker.com/engine/security/trust/trust_key_mng/">Manage keys for content trust</a></li><li><a href="https://docs.docker.com/engine/security/trust/trust_sandbox/">Play in a content trust sandbox</a></li></ul></li><li><a href="https://docs.docker.com/engine/security/antivirus/">Antivirus software and Docker</a></li><li><a href="https://docs.docker.com/engine/security/apparmor/">AppArmor security profiles for Docker</a></li><li><a href="https://docs.docker.com/engine/security/seccomp/">Seccomp security profiles for Docker</a></li><li><a href="https://docs.docker.com/engine/security/userns-remap/">Isolate containers with a user namespace</a></li></ul></li><li><a onclick="navClicked(203)" data-target="#item203" data-toggle="collapse" data-parent="#stacked-menu" class="collapsed" aria-expanded="false">Scale your app<span class="caret arrow"></span></a><ul class="nav collapse" id="#item203" aria-expanded="false"><li><a href="https://docs.docker.com/engine/swarm/">Swarm mode overview</a></li><li><a href="https://docs.docker.com/engine/swarm/key-concepts/">Swarm mode key concepts</a></li><li><a onclick="navClicked(206)" data-target="#item206" data-toggle="collapse" data-parent="#stacked-menu" class="collapsed" aria-expanded="false">Get started with swarm mode<span class="caret arrow"></span></a><ul class="nav collapse" id="#item206" aria-expanded="false"><li><a href="https://docs.docker.com/engine/swarm/swarm-tutorial/">Set up for the tutorial</a></li><li><a href="https://docs.docker.com/engine/swarm/swarm-tutorial/create-swarm/">Create a swarm</a></li><li><a href="https://docs.docker.com/engine/swarm/swarm-tutorial/add-nodes/">Add nodes to the swarm</a></li><li><a href="https://docs.docker.com/engine/swarm/swarm-tutorial/deploy-service/">Deploy a service</a></li><li><a href="https://docs.docker.com/engine/swarm/swarm-tutorial/inspect-service/">Inspect the service</a></li><li><a href="https://docs.docker.com/engine/swarm/swarm-tutorial/scale-service/">Scale the service</a></li><li><a href="https://docs.docker.com/engine/swarm/swarm-tutorial/delete-service/">Delete the service</a></li><li><a href="https://docs.docker.com/engine/swarm/swarm-tutorial/rolling-update/">Apply rolling updates</a></li><li><a href="https://docs.docker.com/engine/swarm/swarm-tutorial/drain-node/">Drain a node</a></li><li><a href="https://docs.docker.com/engine/swarm/ingress/">Use swarm mode routing mesh</a></li></ul></li><li><a onclick="navClicked(217)" data-target="#item217" data-toggle="collapse" data-parent="#stacked-menu" class="collapsed" aria-expanded="false">How swarm mode works<span class="caret arrow"></span></a><ul class="nav collapse" id="#item217" aria-expanded="false"><li><a href="https://docs.docker.com/engine/swarm/how-swarm-mode-works/nodes/">How nodes work</a></li><li><a href="https://docs.docker.com/engine/swarm/how-swarm-mode-works/services/">How services work</a></li><li><a href="https://docs.docker.com/engine/swarm/how-swarm-mode-works/pki/">Manage swarm security with PKI</a></li><li><a href="https://docs.docker.com/engine/swarm/how-swarm-mode-works/swarm-task-states/">Swarm task states</a></li></ul></li><li><a href="https://docs.docker.com/engine/swarm/swarm-mode/">Run Docker in swarm mode</a></li><li><a href="https://docs.docker.com/engine/swarm/join-nodes/">Join nodes to a swarm</a></li><li><a href="https://docs.docker.com/engine/swarm/manage-nodes/">Manage nodes in a swarm</a></li><li><a href="https://docs.docker.com/engine/swarm/services/">Deploy services to a swarm</a></li><li><a href="https://docs.docker.com/engine/swarm/configs/">Store service configuration data</a></li><li><a href="https://docs.docker.com/engine/swarm/secrets/">Manage sensitive data with Docker secrets</a></li><li><a href="https://docs.docker.com/engine/swarm/swarm_manager_locking/">Lock your swarm</a></li><li><a href="https://docs.docker.com/engine/swarm/networking/">Manage swarm service networks</a></li><li><a href="https://docs.docker.com/engine/swarm/admin_guide/">Swarm administration guide</a></li><li><a href="https://docs.docker.com/engine/swarm/raft/">Raft consensus in swarm mode</a></li></ul></li><li><a onclick="navClicked(232)" data-target="#item232" data-toggle="collapse" data-parent="#stacked-menu" class="collapsed" aria-expanded="false">Extend Docker<span class="caret arrow"></span></a><ul class="nav collapse" id="#item232" aria-expanded="false"><li><a href="https://docs.docker.com/engine/extend/">Managed plugin system</a></li><li><a href="https://docs.docker.com/engine/extend/plugins_authorization/">Access authorization plugin</a></li><li><a href="https://docs.docker.com/engine/extend/legacy_plugins/">Extending Docker with plugins</a></li><li><a href="https://docs.docker.com/engine/extend/plugins_network/">Docker network driver plugins</a></li><li><a href="https://docs.docker.com/engine/extend/plugins_volume/">Volume plugins</a></li><li><a href="https://docs.docker.com/engine/extend/config/">Plugin configuration</a></li><li><a href="https://docs.docker.com/engine/extend/plugin_api/">Plugins API</a></li></ul></li></ul></li></ul></li><li><a onclick="navClicked(240)" data-target="#item240" data-toggle="collapse" data-parent="#stacked-menu" class="collapsed" aria-expanded="false">Standards and compliance<span class="caret arrow"></span></a><ul class="nav collapse" id="#item240" aria-expanded="false"><li><a href="https://docs.docker.com/compliance/">Docker standards and compliance</a></li><li><a onclick="navClicked(242)" data-target="#item242" data-toggle="collapse" data-parent="#stacked-menu" class="collapsed" aria-expanded="false">NIST<span class="caret arrow"></span></a><ul class="nav collapse" id="#item242" aria-expanded="false"><li><a href="https://docs.docker.com/compliance/nist/800_53/">NIST SP 800-53</a></li><li><a href="https://docs.docker.com/compliance/nist/800_190/">NIST SP 800-190</a></li><li><a href="https://docs.docker.com/compliance/nist/nistir_8176/">NISTIR 8176</a></li><li><a href="https://docs.docker.com/compliance/nist/itl_october2017/">NIST ITL Bulletin October 2017</a></li></ul></li><li><a onclick="navClicked(247)" data-target="#item247" data-toggle="collapse" data-parent="#stacked-menu" class="collapsed" aria-expanded="false">CIS Benchmarks<span class="caret arrow"></span></a><ul class="nav collapse" id="#item247" aria-expanded="false"><li><a href="https://docs.docker.com/compliance/cis/docker_ee/">Docker EE Benchmark</a></li><li><a href="https://docs.docker.com/compliance/cis/docker_ce/">Docker CE Benchmark</a></li><li><a href="https://docs.docker.com/compliance/cis/k8s/">Kubernetes Benchmark</a></li></ul></li><li><a href="https://docs.docker.com/compliance/fedramp/">FedRAMP</a></li></ul></li><li><a onclick="navClicked(252)" data-target="#item252" data-toggle="collapse" data-parent="#stacked-menu" class="collapsed" aria-expanded="false">Open source at Docker<span class="caret arrow"></span></a><ul class="nav collapse" id="#item252" aria-expanded="false"><li><a href="https://docs.docker.com/opensource/">Contribute to documentation</a></li><li><a href="https://docs.docker.com/opensource/ways/">Other ways to contribute</a></li></ul></li><li><a onclick="navClicked(255)" data-target="#item255" data-toggle="collapse" data-parent="#stacked-menu" class="collapsed" aria-expanded="false">Documentation archive<span class="caret arrow"></span></a><ul class="nav collapse" id="#item255" aria-expanded="false"><li><a href="https://docs.docker.com/docsarchive/">View the docs archives</a></li><li><a href="https://docs.docker.com/hackathon/">Docs hackathon results</a></li></ul></li></ul>
+</div>
+
+						</div>
+					</nav>
+					<div class="col-toc">
+							<div class="sidebar hidden-xs hidden-sm">
+							<div class="toc-nav">
+								<div class="feedback-links">
+									<ul>
+										
+										<li style="visibility: visible;"><a href="https://github.com/docker/docker.github.io/edit/master/get-started/part4.md"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit this page</a></li>
+										<li><a href="https://github.com/docker/docker.github.io/issues/new?assignee=gbarr01&amp;body=File:%20[get-started/part4.md](https://docs.docker.com/get-started/part4/),%20CC%20@gbarr01" class="nomunge"><i class="fa fa-check" aria-hidden="true"></i> Request docs changes</a></li>
+										<li><a href="https://www.docker.com/docker-support-services"><i class="fa fa-question" aria-hidden="true"></i> Get support</a></li>
+										<!-- toggle mode -->
+										<li>
+											<div class="toggle-mode">
+												<div class="icon">
+													<i class="fa fa-sun-o" aria-hidden="true"></i>
+												</div>
+												<div class="toggle-switch">
+													<label class="switch">
+														<input type="checkbox" id="switch-style">
+														<div class="slider round"></div>
+												</label>
+												</div>
+												<div class="icon">
+													<i class="fa fa-moon-o" aria-hidden="true"></i>
+												</div>
+											</div>
+										</li>
+									</ul>
+								</div>
+								   
+									<div id="side-toc-title">On this page:</div>
+									
+<ul id="my_toc" class="inline_toc">
+  <li><a href="https://docs.docker.com/get-started/part4/#prerequisites" class="nomunge">Prerequisites</a></li>
+  <li><a href="https://docs.docker.com/get-started/part4/#introduction" class="nomunge">Introduction</a></li>
+  <li><a href="https://docs.docker.com/get-started/part4/#understanding-swarm-clusters" class="nomunge">Understanding Swarm clusters</a></li>
+  <li><a href="https://docs.docker.com/get-started/part4/#set-up-your-swarm" class="nomunge">Set up your swarm</a>
+    <ul>
+      <li><a href="https://docs.docker.com/get-started/part4/#create-a-cluster" class="nomunge">Create a cluster</a></li>
+    </ul>
+  </li>
+  <li><a href="https://docs.docker.com/get-started/part4/#deploy-your-app-on-the-swarm-cluster" class="nomunge">Deploy your app on the swarm cluster</a>
+    <ul>
+      <li><a href="https://docs.docker.com/get-started/part4/#configure-a-docker-machine-shell-to-the-swarm-manager" class="nomunge">Configure a docker-machine shell to the swarm manager</a></li>
+      <li><a href="https://docs.docker.com/get-started/part4/#deploy-the-app-on-the-swarm-manager" class="nomunge">Deploy the app on the swarm manager</a></li>
+      <li><a href="https://docs.docker.com/get-started/part4/#accessing-your-cluster" class="nomunge">Accessing your cluster</a></li>
+    </ul>
+  </li>
+  <li><a href="https://docs.docker.com/get-started/part4/#iterating-and-scaling-your-app" class="nomunge">Iterating and scaling your app</a></li>
+  <li><a href="https://docs.docker.com/get-started/part4/#cleanup-and-reboot" class="nomunge">Cleanup and reboot</a>
+    <ul>
+      <li><a href="https://docs.docker.com/get-started/part4/#stacks-and-swarms" class="nomunge">Stacks and swarms</a></li>
+      <li><a href="https://docs.docker.com/get-started/part4/#unsetting-docker-machine-shell-variable-settings" class="nomunge">Unsetting docker-machine shell variable settings</a></li>
+      <li><a href="https://docs.docker.com/get-started/part4/#restarting-docker-machines" class="nomunge">Restarting Docker machines</a></li>
+    </ul>
+  </li>
+  <li><a href="https://docs.docker.com/get-started/part4/#recap-and-cheat-sheet-optional" class="nomunge">Recap and cheat sheet (optional)</a></li>
+</ul>
+
+
+								</div>
+								
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	
+	<footer class="footer">
+		  
+    <div class="container">
+        <div class="top_footer">
+            <div class="row">
+                <div class="col-xs-12 col-sm-3 col-md-3">
+                    <ul class="footer_links">
+                        <li><a href="https://www.docker.com/what-docker">What is Docker</a></li>
+                        <li><a href="https://www.docker.com/what-container">What is a Container</a></li>
+                        <li><a href="https://www.docker.com/use-cases">Use Cases</a></li>
+                        <li><a href="https://www.docker.com/customers">Customers</a></li>
+                        <li><a href="https://www.docker.com/partners/partner-program">Partners</a></li>
+                        <li class="break"><a href="https://www.docker.com/industry-government">For Government</a></li>
+                        <li><a href="https://www.docker.com/company">About Docker</a></li>
+                        <li><a href="https://www.docker.com/company/management">Management</a></li>
+                        <li><a href="https://www.docker.com/company/news-and-press">Press &amp; News</a></li>
+                        <li><a href="https://www.docker.com/careers">Careers</a></li>
+                    </ul>
+                </div>
+                <div class="col-xs-12 col-sm-3 col-md-3">
+                    <ul class="footer_links">
+                        <li><a href="https://www.docker.com/products/overview">Product</a></li>
+                        <li><a href="https://www.docker.com/pricing">Pricing</a></li>
+                        <li><a href="https://www.docker.com/docker-community">Community Edition</a></li>
+                        <li class="break"><a href="https://www.docker.com/enterprise">Enterprise Edition </a></li>
+                        <li><a href="https://www.docker.com/products/docker-datacenter">Docker Datacenter</a></li>
+                        <li><a href="https://cloud.docker.com/">Docker Cloud</a></li>
+                        <li><a href="https://store.docker.com/">Docker Store</a></li>
+                    </ul>
+                </div>
+                <div class="col-xs-12 col-sm-3 col-md-3">
+                    <ul class="footer_links">
+                        <li><a href="https://docs.docker.com/">Documentation</a></li>
+                        <li><a href="https://www.docker.com/docker">Learn</a></li>
+                        <li><a href="https://blog.docker.com/" target="_blank">Blog</a></li>
+                        <li><a href="https://training.docker.com/" target="_blank">Training</a></li>
+                        <li><a href="https://www.docker.com/docker-support-services">Support</a></li>
+                        <li><a href="https://success.docker.com/kbase">Knowledge Base</a></li>
+                        <li><a href="https://www.docker.com/products/resources">Resources</a></li>
+                    </ul>
+                </div>
+                <div class="col-xs-12 col-sm-3 col-md-3">
+                    <ul class="footer_links">
+                        <li><a href="https://www.docker.com/docker-community">Community</a></li>
+                        <li><a href="https://www.docker.com/technologies/overview">Open Source</a></li>
+                        <li><a href="https://www.docker.com/community/events">Events</a></li>
+                        <li><a href="https://forums.docker.com/" target="_blank">Forums</a></li>
+                        <li><a href="https://www.docker.com/community/docker-captains">Docker Captains</a></li>
+                        <li><a href="https://www.docker.com/docker-community/scholarships">Scholarships</a></li>
+                        <li><a href="https://blog.docker.com/curated/">Community News</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-nav">
+                <nav class="footer_sub_nav">
+                    <ul class="menu">
+                        <li><a href="http://status.docker.com/">Status</a></li>
+                        <li><a href="https://www.docker.com/docker-security">Security</a></li>
+                        <li><a href="https://www.docker.com/legal">Legal</a></li>
+                        <li><a href="https://www.docker.com/company/contact">Contact</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+        <div class="bottom_footer">
+            <div class="footer-copyright col-xs-12 col-md-8">
+                <p class="copyright">
+                    Copyright © 2018 Docker Inc. All rights reserved. </p>
+            </div>
+            <div class="footer_social_nav">
+                <ul class="nav-social">
+                    <li class="fa fa-twitter"><a href="http://twitter.com/docker">Twitter</a></li>
+                    <li class="fa fa-youtube"><a href="http://www.youtube.com/user/dockerrun">Youtube</a></li>
+                    <li class="fa fa-google-plus"><a href="https://plus.google.com/u/0/communities/108146856671494713993">Google</a></li>
+                    <li class="fa fa-github"><a href="https://github.com/docker/docker">Github</a></li>
+                    <li class="fa fa-linkedin"><a href="https://www.linkedin.com/company/docker">Linkedin</a></li>
+                    <li class="fa fa-facebook"><a href="https://www.facebook.com/docker.run">Facebook</a></li>
+                    <li class="fa fa-reddit"><a href="http://www.reddit.com/r/docker">Reddit</a></li>
+                    <li class="fa fa-slideshare"><a href="http://www.slideshare.net/docker">Slideshare</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+	</footer>
+	<link rel="stylesheet" href="./Get Started, Part 4_ Swarms _ Docker Documentation_files/github.css">
+	
+	<!-- <script src="/js/anchorlinks.js"></script> -->
+	<script defer="" src="./Get Started, Part 4_ Swarms _ Docker Documentation_files/menu.js"></script>
+	<script src="./Get Started, Part 4_ Swarms _ Docker Documentation_files/jquery.js"></script>
+	<script src="./Get Started, Part 4_ Swarms _ Docker Documentation_files/bootstrap.min.js"></script>
+	<!-- Always include the archive.js, but it doesn't do much unless we are an archive -->
+	<script language="javascript">
+	// Default to assuming this is an archive and hiding some stuff
+	// See js/archive.js and js/docs.js for logic relating to this
+	var isArchive = true;
+	var dockerVersion = 'v17.12';
+	// In archives, we need to know the page root and we get it from JEKYLL_ENV in the jekyll build command
+	var jekyllEnv = 'development';
+	// If unset (in non-archive branches), defaults to "development". In that case, reset it to empty
+	if (jekyllEnv == 'development') {
+		jekyllEnv = '';
+	}
+	var pageURL = jekyllEnv + '/get-started/part4/';
+	</script>
+	<script src="./Get Started, Part 4_ Swarms _ Docker Documentation_files/archive.js"></script>
+	<script src="./Get Started, Part 4_ Swarms _ Docker Documentation_files/stickyfill.min.js"></script>
+	<script defer="" src="./Get Started, Part 4_ Swarms _ Docker Documentation_files/metadata.js"></script>
+	<script src="./Get Started, Part 4_ Swarms _ Docker Documentation_files/glossary.js"></script>
+	<script src="./Get Started, Part 4_ Swarms _ Docker Documentation_files/collections_tocs.js"></script>
+	<script defer="" src="./Get Started, Part 4_ Swarms _ Docker Documentation_files/docs.js"></script>
+	<script defer="" src="./Get Started, Part 4_ Swarms _ Docker Documentation_files/toc.js"></script>
+	<script language="javascript">
+	jQuery(document).ready(function(){
+				hookupTOCEvents();
+			});
+	</script>
+
+
+
+</body></html>
