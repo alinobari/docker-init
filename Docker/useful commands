@@ -1,2 +1,0 @@
-#to bypass cache
-$ sudo docker build --no-cache -t 'container' .
